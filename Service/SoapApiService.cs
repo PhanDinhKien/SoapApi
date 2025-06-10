@@ -20,7 +20,7 @@ namespace SoapApi.Service
         /// <summary>
         /// Calls the SOAP GetLocations API and returns the raw SOAP response.
         /// </summary>
-        public async Task<GetLocationsResponse> CallSoapApiAsync()
+        public CirculationServiceClient CallSoapApi()
         {
             var soapSettings = _config.GetSection("SoapSettings");
             var url = soapSettings["Url"];
@@ -36,8 +36,7 @@ namespace SoapApi.Service
             var client = new CirculationServiceClient(CirculationServiceClient.EndpointConfiguration.WSHttpBinding_ICirculationService, endpoint);
             client.ClientCredentials.UserName.UserName = username;
             client.ClientCredentials.UserName.Password = password;
-            var response = await client.GetLocationsAsync("", "");
-            return response;
+            return client;
         }
     }
 }

@@ -86,3 +86,6 @@
 /Users/kienkien/Documents/Edufit/SoapApi/obj/Debug/net8.0/SoapApi.pdb
 /Users/kienkien/Documents/Edufit/SoapApi/obj/Debug/net8.0/SoapApi.genruntimeconfig.cache
 /Users/kienkien/Documents/Edufit/SoapApi/obj/Debug/net8.0/ref/SoapApi.dll
+/Users/kienkien/Documents/Edufit/SoapApi/obj/Debug/net8.0/SoapApi.sourcelink.json
+/Users/kienkien/Documents/Edufit/SoapApi/bin/Debug/net8.0/SoapApi.xml
+/Users/kienkien/Documents/Edufit/SoapApi/obj/Debug/net8.0/SoapApi.xml

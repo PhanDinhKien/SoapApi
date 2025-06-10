@@ -2,10 +2,10 @@ using SoapApi.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SoapApi.ServiceReference
+namespace SoapApi.Service
 {
     public interface ILocationService
     {
-        Task<List<LocationDto>> GetLocationsAsync(string sBranchCode, string sLocationCode);
+        Task<List<LocationDto>> GetLocationsAsync();
     }
 }

@@ -24,12 +24,21 @@ namespace SoapApi.Controllers
         // Ví dụ: Lấy danh sách chi nhánh
         [HttpGet("get-branches")]
         public IActionResult GetBranches() => throw new NotImplementedException();
-        [HttpGet("get-locations")]
-        public async Task<ActionResult<List<Dtos.LocationDto>>> GetLocationsAsync()
+        /// <summary>
+        /// Lấy danh sách vị trí (location) theo chi nhánh và mã vị trí.
+        /// </summary>
+        /// <param name="sBranchCode">Mã chi nhánh (có thể để trống)</param>
+        /// <param name="sLocationCode">Mã vị trí (có thể để trống)</param>
+        /// <returns>Danh sách LocationDto</returns>
+        /// <response code="200">Trả về danh sách các vị trí (LocationDto)</response>
+        /// <response code="400">Yêu cầu không hợp lệ (InvalidOperationException)</response>
+        /// <response code="500">Lỗi máy chủ nội bộ</response>
+        /// [HttpGet("get-locations")]
+        public async Task<ActionResult<List<Dtos.LocationDto>>> GetLocationsAsync([FromQuery] string? sBranchCode, [FromQuery] string? sLocationCode)
         {
             try
             {
-                var locations = await _locationService.GetLocationsAsync();
+                var locations = await _locationService.GetLocationsAsync(sBranchCode ?? string.Empty, sLocationCode ?? string.Empty);
                 return Ok(locations);
             }
             catch (InvalidOperationException ex)

@@ -8,6 +8,6 @@ namespace SoapApi.ServiceReference
 {
     public interface ISoapApiService
     {
-        Task<GetLocationsResponse> CallSoapApiAsync(); 
+        CirculationServiceClient CallSoapApi();
     }
 }

@@ -14,14 +14,15 @@ namespace SoapApi.Service
             _soapApiService = soapApiService;
         }
 
-        public async Task<List<LocationDto>> GetLocationsAsync()
+        public async Task<List<LocationDto>> GetLocationsAsync(string sBranchCode, string sLocationCode)
         {
-            var response = await _soapApiService.CallSoapApiAsync();
-            var result = response.GetLocationsResult;
+            var client =  _soapApiService.CallSoapApi();
+            var result = await client.GetLocationsAsync(sBranchCode, sLocationCode);
+            var response = result.GetLocationsResult;
             var locations = new List<LocationDto>();
-            if (result != null)
+            if (response != null)
             {
-                foreach (var xElem in result.Nodes)
+                foreach (var xElem in response.Nodes)
                 {
                     var tables = xElem.Descendants("Table");
                     foreach (var table in tables)
