@@ -14,8 +14,8 @@ namespace SoapApi.Controllers
     public class LocationController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private readonly SoapApi.ServiceReference.ILocationService _locationService;
-        public LocationController(IConfiguration config, SoapApi.ServiceReference.ILocationService locationService)
+        private readonly SoapApi.Service.ILocationService _locationService;
+        public LocationController(IConfiguration config, SoapApi.Service.ILocationService locationService)
         {
             _config = config;
             _locationService = locationService;
@@ -34,7 +34,7 @@ namespace SoapApi.Controllers
         /// <response code="200">Trả về danh sách các vị trí (LocationDto)</response>
         /// <response code="400">Yêu cầu không hợp lệ (InvalidOperationException)</response>
         /// <response code="500">Lỗi máy chủ nội bộ</response>
-        /// [HttpGet("get-locations")]
+        [HttpGet("get-locations")]
         public async Task<ActionResult<List<Dtos.LocationDto>>> GetLocationsAsync([FromQuery] string? sBranchCode, [FromQuery] string? sLocationCode)
         {
             try

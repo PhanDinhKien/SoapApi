@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using SoapApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +16,49 @@ builder.Services.AddSwaggerGen(c =>
     {
         c.IncludeXmlComments(xmlPath);
     }
+    c.AddSecurityDefinition("ApiKey", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Name = "X-Api-Key",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Description = "API Key for authentication"
+    });
+    c.AddSecurityDefinition("ApiSecret", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Name = "X-Api-Secret",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Description = "API Secret for authentication"
+    });
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                }
+            },
+            new string[] {}
+        },
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "ApiSecret"
+                }
+            },
+            new string[] {}
+        }
+    });
 });
 builder.Services.AddScoped<SoapApi.ServiceReference.ISoapApiService, SoapApi.Service.SoapApiService>();
-builder.Services.AddScoped<SoapApi.ServiceReference.ILocationService, SoapApi.Service.LocationService>();
+builder.Services.AddScoped<SoapApi.Service.ILocationService, SoapApi.Service.LocationService>();
+builder.Services.AddScoped<SoapApi.ServiceReference.IPatronService, SoapApi.Service.PatronService>();
 
 var app = builder.Build();
 
@@ -31,6 +72,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ApiKeyAuthMiddleware>();
 
 app.MapControllers();
 

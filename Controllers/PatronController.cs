@@ -9,6 +9,12 @@ namespace SoapApi.Controllers
     [Route("api/[controller]")]
     public class PatronController : ControllerBase
     {
+        private readonly SoapApi.ServiceReference.IPatronService _patronService;
+        public PatronController(SoapApi.ServiceReference.IPatronService patronService)
+        {
+            _patronService = patronService;
+        }
+
         // Ví dụ: Lấy thông tin bạn đọc
         [HttpGet("{patronId}")]
         public IActionResult GetPatron(int patronId)
@@ -21,7 +27,11 @@ namespace SoapApi.Controllers
         [HttpGet("get-patron-id")]
         public IActionResult GetPatronID() => throw new NotImplementedException();
         [HttpPost("insert-patron")]
-        public IActionResult InsertPatron() => throw new NotImplementedException();
+        public async Task<IActionResult> InsertPatron([FromBody] Dtos.InsertPatronDto dto)
+        {
+            var result = await _patronService.InsertPatronAsync(dto);
+            return Ok(result);
+        }
         [HttpPut("update-patron")]
         public IActionResult UpdatePatron() => throw new NotImplementedException();
         [HttpDelete("delete-patron")]
@@ -45,7 +55,11 @@ namespace SoapApi.Controllers
         [HttpGet("get-patron-search-count")]
         public IActionResult GetPatronSearchCount() => throw new NotImplementedException();
         [HttpGet("get-patron-search-page")]
-        public IActionResult GetPatronSearchPage() => throw new NotImplementedException();
+        public async Task<IActionResult> GetPatronSearchPage([FromQuery] int pageNumber, [FromQuery] int pageSize)
+        {
+            var result = await _patronService.GetPatronSearchPageAsync(pageNumber, pageSize);
+            return Ok(result);
+        }
         [HttpGet("get-lookup-patrons")]
         public IActionResult GetLookupPatrons() => throw new NotImplementedException();
         // ... Thêm các API khác tương ứng các method quản lý bạn đọc ...
