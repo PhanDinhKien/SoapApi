@@ -24,6 +24,7 @@ namespace SoapApi.Controllers
         // Ví dụ: Lấy danh sách chi nhánh
         [HttpGet("get-branches")]
         public IActionResult GetBranches() => throw new NotImplementedException();
+        
         /// <summary>
         /// Lấy danh sách vị trí (location) theo chi nhánh và mã vị trí.
         /// </summary>

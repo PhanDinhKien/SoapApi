@@ -6,6 +6,6 @@ namespace SoapApi.Service
 {
     public interface ILocationService
     {
-        Task<List<LocationDto>> GetLocationsAsync();
+        Task<List<LocationDto>> GetLocationsAsync(string sBranchCode, string sLocationCode);
     }
 }
